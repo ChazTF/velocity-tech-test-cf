@@ -1,0 +1,66 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__logo" href="{{ routes.root_url }}">
+      {% if section.settings.logo != blank %}
+        <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name | escape }}" loading="eager" />
+      {% else %}
+        <span class="site-header__logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+      {% endif %}
+    </a>
+
+    {% assign main_menu = linklists[section.settings.main_menu] %}
+    {% if main_menu and main_menu.links.size > 0 %}
+      <nav class="site-nav" role="navigation" aria-label="Main">
+        <ul class="site-nav__list">
+          {% for link in main_menu.links %}
+            <li class="site-nav__item">
+              <a class="site-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+
+    <div class="site-header__actions">
+      {% if section.settings.show_account_icon %}
+        {% if shop.customer_accounts == 'required' or shop.customer_accounts == 'optional' or shop.customer_accounts_enabled %}
+            {% if customer %}
+            <a class="site-header__action site-header__account" href="{{ routes.account_url }}" aria-label="Account">
+                <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18 7.5C18 3.36 14.64 0 10.5 0C6.36 0 3 3.36 3 7.5C3 9.78 4.017 11.823 5.625 13.2C2.28 14.955 0 18.459 0 22.5C0 23.328 0.672 24 1.5 24C2.328 24 3 23.328 3 22.5C3 18.36 6.36 15 10.5 15C14.64 15 18 18.36 18 22.5C18 23.328 18.672 24 19.5 24C20.328 24 21 23.328 21 22.5C21 18.4605 18.72 14.955 15.375 13.2C16.9845 11.82 18 9.78 18 7.5ZM10.5 12C8.0145 12 6 9.9855 6 7.5C6 5.0145 8.0145 3 10.5 3C12.9855 3 15 5.0145 15 7.5C15 9.9855 12.9855 12 10.5 12Z" fill="white"/>
+                </svg>
+            </a>
+            {% else %}
+            <a class="site-header__action site-header__account" href="{{ routes.account_login_url }}" aria-label="Log in">
+                <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18 7.5C18 3.36 14.64 0 10.5 0C6.36 0 3 3.36 3 7.5C3 9.78 4.017 11.823 5.625 13.2C2.28 14.955 0 18.459 0 22.5C0 23.328 0.672 24 1.5 24C2.328 24 3 23.328 3 22.5C3 18.36 6.36 15 10.5 15C14.64 15 18 18.36 18 22.5C18 23.328 18.672 24 19.5 24C20.328 24 21 23.328 21 22.5C21 18.4605 18.72 14.955 15.375 13.2C16.9845 11.82 18 9.78 18 7.5ZM10.5 12C8.0145 12 6 9.9855 6 7.5C6 5.0145 8.0145 3 10.5 3C12.9855 3 15 5.0145 15 7.5C15 9.9855 12.9855 12 10.5 12Z" fill="white"/>
+                </svg>
+            </a>
+            {% endif %}
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.show_cart_icon %}
+        <a class="site-header__action site-header__cart" href="{{ routes.cart_url }}" aria-label="Cart">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9295 9.267L21.4995 21.336C21.177 22.863 19.8465 23.967 18.2895 24H5.71047C4.15047 23.967 2.81997 22.8645 2.49747 21.336L0.0689725 9.267C-0.117027 8.4675 0.0734725 7.626 0.589473 6.987C1.10397 6.348 1.88547 5.982 2.70447 6H6.01497C6.01497 2.685 8.69997 0 12.0075 0C15.3165 0 18 2.685 18 6H21.2955C22.116 5.985 22.8975 6.348 23.4135 6.987C23.928 7.626 24.1185 8.4675 23.9325 9.267H23.9295ZM5.38497 20.733C5.43897 20.8755 5.56497 20.9775 5.71497 21H18.288C18.438 20.976 18.5625 20.874 18.615 20.733L19.17 18H4.83747L5.38647 20.733H5.38497ZM12.006 3C10.35 3 9.00897 4.3425 9.00897 6H15C15 4.3425 13.6605 3 12.006 3ZM3.02697 9L4.23447 15H19.7775L20.9925 8.991H3.01497L3.02997 9H3.02697Z" fill="white"/>
+          </svg>
+          <span class="site-header__cart-count">{{ cart.item_count }}</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "LOGO" },
+    { "type": "link_list", "id": "main_menu", "label": "Main menu" },
+    { "type": "checkbox", "id": "show_account_icon", "label": "Show account icon", "default": true },
+    { "type": "checkbox", "id": "show_cart_icon", "label": "Show cart icon", "default": true }
+  ]
+}
+{% endschema %}

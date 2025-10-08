@@ -1,0 +1,122 @@
+html {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header.site-header {
+    display: flex;
+    align-items: center;
+    background-color: #1E3563;
+    height: 40px;
+    max-height: 60px;
+    padding: 10px 60px 10px 60px;
+
+    .site-header__inner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        /* Logo */
+        .site-header__logo {
+            text-decoration: none;
+
+            span.site-header__logo-text {
+                color: #ffffff;
+                font-size: 24px;
+                letter-spacing: 20px;
+            }
+        }
+        /* Header Icons */
+        .site-header__actions {
+            /* Account icon */
+            .site-header__account {
+                margin-right: 30px;
+            }
+            /* Cart Icon */
+            .site-header__cart {
+                position: relative;
+
+                .site-header__cart-count {
+                    background-color: #68DD7C;
+                    color: #000000;
+                    position: absolute;
+                    top: -15px;
+                    right: -7px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: "Montserrat", sans-serif;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+/* Footer */
+footer.site-footer {
+    background-color: #1E3563;
+    padding: 30px 60px 30px 60px;
+
+    > *, a {
+        color: #ffffff;
+    }
+
+    .site-footer__inner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .site-footer__left {
+
+            /* Logo */
+            .site-footer__logo {
+                text-decoration: none;
+
+                span.site-footer__logo-text {
+                    color: #ffffff;
+                    font-size: 24px;
+                    letter-spacing: 20px;
+                }
+            }
+
+            .site-footer__small-text {
+                margin-top: 16px;
+                font-size: 10px;
+            }
+        }
+
+        .site-footer__right {
+            display: flex; 
+            align-items: flex-start;
+            justify-content: flex-end;
+            gap: 80px;
+
+            .site-footer__nav {
+                font-size: 12px;
+                font-weight: 700;
+
+                ul.site-footer__menu {
+                    list-style: none;
+                    padding: 0;
+
+                    li {
+                        margin-bottom: 3px;
+                    }
+                }
+            }
+        }
+    }
+}

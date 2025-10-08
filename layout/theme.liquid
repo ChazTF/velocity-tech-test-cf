@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'main.js' | asset_url | script_tag }}
 
   {{ content_for_header }}
 </head>
@@ -23,6 +24,10 @@
 <body>
   {% section 'main-header' %}
   
+  {% if request.page_type == 'index' %}
+    {% section 'main-collection' %}
+  {% endif %}
+
   {{ content_for_layout }}
 
   {% section 'main-footer' %}

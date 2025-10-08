@@ -1,0 +1,65 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <!-- Left: Logo + small text -->
+    <div class="site-footer__left">
+      <a class="site-footer__logo" href="{{ routes.root_url }}">
+        {% if section.settings.logo != blank %}
+          <img
+            src="{{ section.settings.logo | image_url: width: 300 }}"
+            alt="{{ section.settings.logo_text | default: shop.name | escape }}"
+            loading="lazy">
+        {% else %}
+          <span class="site-footer__logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+        {% endif %}
+      </a>
+
+      {% if section.settings.small_text != blank %}
+        <div class="site-footer__small-text">
+          {{ section.settings.small_text | escape | newline_to_br }}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Right: Two menus -->
+    <div class="site-footer__right">
+      {% assign menu1_handle = section.settings.footer_main_menu | default: 'main-menu' %}
+      {% assign menu1 = linklists[menu1_handle] %}
+      {% if menu1 %}
+        <nav class="site-footer__nav" aria-label="Footer main menu">
+          <ul class="site-footer__menu">
+            {% for link in menu1.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+
+      {% assign menu2_handle = section.settings.footer_small_print_menu | default: 'footer' %}
+      {% assign menu2 = linklists[menu2_handle] %}
+      {% if menu2 %}
+        <nav class="site-footer__nav" aria-label="Footer small print menu">
+          <ul class="site-footer__menu site-footer__menu--smallprint">
+            {% for link in menu2.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "LOGO" },
+    { "type": "link_list", "id": "footer_main_menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "link_list", "id": "footer_small_print_menu", "label": "Footer menu", "default": "footer" },
+    { "type": "textarea", "id": "small_text", "label": "Small text",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua."
+    }
+    ]
+}
+{% endschema %}

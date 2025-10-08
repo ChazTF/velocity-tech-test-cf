@@ -1,0 +1,121 @@
+{% assign grid_collection = collections['all'] %}
+{% assign limit_val = section.settings.product_limit %}
+{% if limit_val != 'all' %}
+  {% assign limit_num = limit_val | plus: 0 %}
+{% endif %}
+
+<section class="collection-grid">
+  <h1 class="collection-grid__heading">{{ section.settings.heading | default: 'All products' }}</h1>
+
+  {% if grid_collection %}
+    <ul class="collection-grid__list collection-grid__cols-4">
+      {% if limit_val == 'all' %}
+        {% for product in grid_collection.products %}
+          <li class="collection-grid__item">
+            <div class="product-card">
+                <a class="product-card__media" href="{{ product.url }}">
+                {% unless product.available %}
+                    <span class="product-card__badge">Sold out</span>
+                {% endunless %}
+                {% if product.compare_at_price_max > product.price %}
+                    <span class="product-card__badge product-card__badge--sale">Sale</span>
+                {% endif %}
+                {% if product.featured_image %}
+                    <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    loading="lazy">
+                {% else %}
+                    <div class="product-card__placeholder">No image</div>
+                {% endif %}
+                </a>
+
+                <div class="product-card__info">
+                <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                    <div class="product-card_priceQtyWrapper">
+                        <div class="product-card_qty" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                            <button type="button" class="product-card_qty__button" data-step="-1" aria-label="Decrease quantity">−</button>
+                            <input class="product-card_qty__input"
+                                    type="number"
+                                    min="0"
+                                    value="0"
+                                    inputmode="numeric"
+                                    pattern="[0-9]*"
+                                    aria-label="Quantity for {{ product.title }}">
+                            <button type="button" class="product-card_qty__button" data-step="1" aria-label="Increase quantity">+</button>
+
+                            <div class="product-card_qty__msg" role="status" aria-live="polite"></div>
+                        </div>
+                        <div class="product-card__price">
+                            {% if product.compare_at_price_max > product.price %}
+                            <span class="product-card__price--sale">{{ product.price | money }}</span>
+                            <s class="product-card__price--compare">{{ product.compare_at_price_max | money }}</s>
+                            {% else %}
+                            <span>{{ product.price | money }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </li>
+        {% endfor %}
+      {% else %}
+        {% for product in grid_collection.products limit: limit_num %}
+          <li class="collection-grid__item">
+            <a class="product-card" href="{{ product.url }}">
+              <div class="product-card__media">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | image_url: width: 600 }}"
+                       alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+                {% else %}
+                  <div class="product-card__placeholder">No image</div>
+                {% endif %}
+                {% unless product.available %}
+                  <span class="product-card__badge">Sold out</span>
+                {% endunless %}
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <div class="product-card__price">
+                  {% if product.compare_at_price_max > product.price %}
+                    <span class="product-card__price--sale">{{ product.price | money }}</span>
+                    <s class="product-card__price--compare">{{ product.compare_at_price_max | money }}</s>
+                  {% else %}
+                    <span>{{ product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  {% else %}
+    <p>No “All products” collection found.</p>
+  {% endif %}
+</section>
+
+
+{% schema %}
+{
+  "name": "All products grid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "All products" },
+    {
+      "type": "select",
+      "id": "product_limit",
+      "label": "Products to display",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "All" },
+        { "value": "4",  "label": "4" },
+        { "value": "8",  "label": "8" },
+        { "value": "12", "label": "12" },
+        { "value": "16", "label": "16" },
+        { "value": "24", "label": "24" },
+        { "value": "48", "label": "48" }
+      ]
+    }
+  ]
+}
+{% endschema %}

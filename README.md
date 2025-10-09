@@ -44,12 +44,15 @@ shopify theme dev --store=velocity-tech-test --password=shptka_ea1e90de841c7cdae
 
 ## 3) Run watcher on SCSS
 
-- Package.json file is not included in the Github repo so type in the following to your terminal:
+- Open another terminal in your IDE.
+- Package.json file is not included in the Github repo so type the following in your terminal:
 ```
 npm init -y
 npm i -D sass
 ```
-- Then add the following to your the package.json file that was just created:
+This will create a file called package.json
+
+- Open package.json file that was just created and paste in the following:
 ```
 "scripts": {
     "scss": "sass assets/scss/main.scss assets/theme.css --no-source-map",
@@ -57,7 +60,7 @@ npm i -D sass
 },
 
 ```
-- Open another terminal in your IDE and input the following:
+- Save package.json and then return to the new terminal, type in the following:
 ```
 npm run scss:watch
 ```

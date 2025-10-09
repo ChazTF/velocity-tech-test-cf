@@ -63,7 +63,6 @@ npm run scss:watch
 ```
 You'll now have two terminals running, one is the shopify dev session that syncs to Shopify after each save, and the other is watching main.scss and updating theme.css on save. 
 
-And now you're ready to rock! Just rememeber, you'll be on the main branch, so make sure you create a new branch for any edits, then commit and merge when you're ready. 
-### Good Luck!
+## You're ready to rock! 
 
-If you run into any issues or have any questions, feel free to reach out to a.pearson@digital-velocity.co.uk
+Just rememeber, you'll be on the main branch, so make sure you create a new branch for any edits, then commit and merge when you're ready. 

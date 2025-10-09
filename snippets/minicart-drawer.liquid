@@ -1,0 +1,36 @@
+<div id="minicart-drawer" class="minicart-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Shopping cart">
+    <div class="minicart-drawer__overlay" data-cart-close>
+        <button class="minicart-drawer__close" type="button" aria-label="Close cart" data-cart-close>
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M2.37437 0.606533C1.88621 0.118378 1.09476 0.118378 0.606602 0.606533C0.118447 1.09469 0.118446 1.88614 0.606601 2.3743L9.44544 11.2131L0.606602 20.052C0.118446 20.5401 0.118447 21.3316 0.606602 21.8197C1.09476 22.3079 1.88621 22.3079 2.37437 21.8197L11.2132 12.9809L20.052 21.8197C20.5402 22.3079 21.3316 22.3079 21.8198 21.8197C22.308 21.3316 22.308 20.5401 21.8198 20.052L12.981 11.2131L21.8198 2.3743C22.308 1.88614 22.308 1.09469 21.8198 0.606533C21.3316 0.118378 20.5402 0.118378 20.052 0.606533L11.2132 9.44537L2.37437 0.606533Z" fill="black"/>
+            </svg>
+        </button>
+    </div>
+
+    <aside class="minicart-drawer__wrapper" tabindex="-1">
+        <header class="minicart-drawer__header">
+            <span class="minicart-drawer__title">Your Basket</span>
+
+            <div class="minicart-drawer__actions">
+                <button class="minicart-drawer__clear js-cart-clear" type="button">Clear all</button>
+            </div>
+        </header>
+
+        <div class="minicart-drawer__items js-cart-items"></div>
+
+        <footer class="minicart-drawer__footer">
+            <div class="minicart-drawer__count"><span class="js-cart-count">0</span> Items</div>
+            <div class="minicart-drawer__total"><span class="js-cart-total">{{ cart.total_price | money }}</span></div>
+            <div class="minicart-drawer__cta">
+                <a href="/checkout" class="btn btn--primary">Checkout Now</a>
+            </div>
+        </footer>
+    </aside>
+</div>
+
+{% comment %} Load SVGs here so they can be used in JS {% endcomment %}
+
+<svg id="icon-trash" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.125 3.5V12.25C13.125 13.2169 12.3419 14 11.375 14H2.625C1.65812 14 0.875 13.2169 0.875 12.25V3.5C0.392 3.5 0 3.108 0 2.625C0 2.142 0.392 1.75 0.875 1.75H5.25C5.25 0.783125 6.03312 0 7 0C7.96688 0 8.75 0.783125 8.75 1.75H13.125C13.608 1.75 14 2.142 14 2.625C14 3.108 13.608 3.5 13.125 3.5ZM11.375 3.5H2.625V12.25H11.375V3.5ZM4.375 4.375C4.858 4.375 5.25 4.767 5.25 5.25V10.5C5.25 10.983 4.858 11.375 4.375 11.375C3.892 11.375 3.5 10.983 3.5 10.5V5.25C3.5 4.767 3.892 4.375 4.375 4.375ZM7 4.375C7.483 4.375 7.875 4.767 7.875 5.25V10.5C7.875 10.983 7.483 11.375 7 11.375C6.517 11.375 6.125 10.983 6.125 10.5V5.25C6.125 4.767 6.517 4.375 7 4.375ZM9.625 4.375C10.108 4.375 10.5 4.767 10.5 5.25V10.5C10.5 10.983 10.108 11.375 9.625 11.375C9.142 11.375 8.75 10.983 8.75 10.5V5.25C8.75 4.767 9.142 4.375 9.625 4.375Z" fill="black"/>
+</svg>
+

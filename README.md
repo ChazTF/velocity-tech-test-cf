@@ -1,58 +1,69 @@
 <img src="./velocity-tech-test.png" alt="drawing" width="100%"/>
 
-## Welcome, Developer!
+## Hello!
 
-You've been tasked with helping Digital Velocity bring a fresh collection page and a functional cart drawer to life. Your goal is to build these features from scratch, incorporating a structure for styling, JavaScript, and HTML that best suits your development style and approach.
+This readme file will explain how to setup and run this project locally.
 
-The purpose of this exercise isn't to complete everything but rather to demonstrate your thought process, coding practices, and overall implementation skills. You're free to spend as much or as little time on it as you're comfortable with.
+Prerequisites:
+- Git (https://git-scm.com/downloads/win)
+- Node.js (LTS) + npm (https://nodejs.org/en/download)
+- Shopify CLI v3+ - Install Node.js and npm first, then run the following:
+```
+npm install -g @shopify/cli
+shopify version
+```
 
-### Challange
+## 1) Get the code
 
-1. #### Collection Page
+- Fork the repository by clicking the "Fork" dropdown on the top right and selecting "Create a new fork".
+- Once in your forked depository, click the green "Code" button and copy the URL under "HTTPS". It will look something like this:
+```
+https://github.com/ChazTF/velocity-tech-test-cf.git
+```
+- Open your terminal on your IDE and clone your fork to your computer using the following command as an example:
+```
+git clone https://github.com/ChazTF/velocity-tech-test-cf.git
+```
+- Once cloned, you need to make sure you're working in the right directory.
+```
+cd velocity-tech-test-cf
+```
+To confirm you're in the right directory you can list the files by writing "dir"(Windows) or "ls" (Linux/macOS) in the terminal.
 
-    Build a Collection Page that displays a grid of products, styled and structured to match the design specifications.
+## 2) Connect to Shopify and access preview
 
-2. #### Cart Drawer
-
-    Implement a Cart Drawer that slides out and allows users to view and manage their cart seamlessly.
-
-## Getting Started
-
-To get started follow the setup steps below:
-
-1. Fork this repository and navigate into the project directory.
-2. Run the following commands:
-
+- Connect by typing in the following to the terminal
 ```
 shopify theme push --store=velocity-tech-test --password=shptka_ea1e90de841c7cdaeb2ce101dd28caa6
 shopify theme list (find the theme ID for the one you just pushed)
 shopify theme dev --store=velocity-tech-test --password=shptka_ea1e90de841c7cdaeb2ce101dd28caa6 --theme=<theme-ID>
+
 ```
 
-You may be asked for a store password which is the following: piepea
+- You'll now see inside the terminal it gives you several links, including your local development environment and the shopify preview link.
 
-Please feel free to use your own development store if you'd prefer. We have provided this for ease of getting started.
+## 3) Run watcher on SCSS
 
-## Project Designs
+- Package.json file is not included in the Github repo so type in the following to your terminal:
+```
+npm init -y
+npm i -D sass
+```
+- Then add the following to your the package.json file that was just created:
+```
+"scripts": {
+    "scss": "sass assets/scss/main.scss assets/theme.css --no-source-map",
+    "scss:watch": "sass --watch assets/scss/main.scss assets/theme.css --no-source-map"
+},
 
-URL: https://www.figma.com/design/TkWkSt0pv0zW2wCvNgcvQq/Velocity---Tech-Test?node-id=0-1&m=dev&t=h5BxnTuRw1MdlGcn-1
-Password: v3l0c1ty
+```
+- Open another terminal in your IDE and input the following:
+```
+npm run scss:watch
+```
+You'll now have two terminals running, one is the shopify dev session that syncs to Shopify after each save, and the other is watching main.scss and updating theme.css on save. 
 
-Note – you may be required to log in to access editing tools to find out css properties.
-
-## Submission
-
-### When you're done, submit:
-
--   A GitHub repository with your code.
--   A README file with instructions on how to set up and run your project locally.
-
-### What We're Looking For
-
--   Functionality: Does your solution meet the requirements?
--   Code Quality: Is your code clean, readable, and well-organized?
--   User Experience: Is the interface intuitive and easy to use?
-
+And now you're ready to rock! Just rememeber, you'll be on the main branch, so make sure you create a new branch for any edits, then commit and merge when you're ready. 
 ### Good Luck!
 
 If you run into any issues or have any questions, feel free to reach out to a.pearson@digital-velocity.co.uk

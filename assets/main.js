@@ -1,5 +1,7 @@
 // assets/main.js
 (function () {
+
+  // Get the store root URL, used so that it can handle locales (en, es etc...)
   const root = (window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/');
 
   // set the quantity for a variant via AJAX cart
@@ -10,6 +12,7 @@
     const res = await fetch(`${root}cart/update.js`, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      credentials: 'same-origin',
       body: formData
     });
 
@@ -43,7 +46,7 @@
     }
 
     const viewCartLink = document.createElement('a');     // or document.createElement('button')
-    viewCartLink.href = '/cart';
+    viewCartLink.href = `${root}cart`;
     viewCartLink.className = 'view-cart-btn btn btn--primary js-open-cart';
     viewCartLink.textContent = 'View Cart';
 
@@ -52,6 +55,22 @@
     msgElement.classList.add('is-visible');
     clearTimeout(msgElement._t);
     msgElement._t = setTimeout(() => msgElement.classList.remove('is-visible'), 1800);
+  }
+
+  // Reset and hide quantity message when products are removed from the cart.
+
+  function resetQtyMessagesForZero(byVariant) {
+    document.querySelectorAll('.product-card_qty').forEach(wrap => {
+      const vid = wrap.getAttribute('data-variant-id');
+      const msg = wrap.querySelector('.product-card_qty__msg');
+      if (!vid || !msg) return;
+
+      const qty = byVariant.get(vid) ?? 0;
+      if (qty === 0) {
+        msg.textContent = '';
+        msg.classList.remove('is-visible');
+      }
+    });
   }
 
   // Get full cart JSON
@@ -172,6 +191,7 @@ document.addEventListener('input', function (e) {
 
   function applyCartToUI(cart) {
     const headerCount = document.querySelector('.site-header__cart-count');
+
     if (headerCount) headerCount.textContent = cart.item_count;
 
     // drawer counters
@@ -192,6 +212,8 @@ document.addEventListener('input', function (e) {
       if (!vid || !input) return;
       input.value = byVariant.get(vid) ?? 0;
     });
+
+    resetQtyMessagesForZero(byVariant);
   }
 
   function renderMiniCart(cart) {
